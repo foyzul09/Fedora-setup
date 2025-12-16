@@ -6,27 +6,23 @@ echo " "
 # Clean garbage
 echo "Clearing garbage...."
 sudo dnf clean all -y
-
-
 echo " "
 
+# Install terra repo
 echo "Installing terra...."
-sudo dnf install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
+sudo dnf install --nogpgcheck --repofrompath "terra,https://repos.fyralabs.com/terra\$releasever" terra-release
 
-#update fedora
+# Update Fedora
 echo "Updating system....."
 sudo dnf update -y
 
-
+# Make internet fast
 echo "Making your internet fast...."
-
 sudo cp -r dnf.conf /etc/dnf/
-
 echo ""
 
-
+# Install core packages
 echo "Installing packages...."
-
 sudo dnf install -y \
     glibc \
     wayland-devel \
@@ -44,83 +40,85 @@ sudo dnf install -y \
     libseat \
     pcre2 \
     xorg-x11-server-Xwayland \
-    libxcb
-    
-    sudo dnf install -y \
+    libxcb \
     dnf-plugins-core \
-    mate-polkit foot kitty nemo nemo-fileroller gnome-text-editor firefox
-    
-    
-    sudo dnf install -y \
-     xdg-user-dirs
-     xdg-user-dirs-update
-     
-     
-     echo "installing noctalia-shell...."
-     
-     sudo dnf copr enable zhangyi6324/noctalia-shell
-     sudo dnf install noctalia-shell
+    mate-polkit \
+    foot \
+    kitty \
+    nemo \
+    nemo-fileroller \
+    gnome-text-editor \
+    firefox \
+    xdg-user-dirs
+
+# Update xdg-user-dirs
+xdg-user-dirs-update
+
+# Install Noctalia Shell
+echo "Installing noctalia-shell...."
+sudo dnf copr enable zhangyi6324/noctalia-shell -y
+sudo dnf install -y noctalia-shell
 
 echo "Your quickshell is ready!"
 
-sudo dnf copr enable sneexy/zen-browser
-sudo dnf install zen-browser
+# Install Zen Browser
+sudo dnf copr enable sneexy/zen-browser -y
+sudo dnf install -y zen-browser
 
+# Install RPM Fusion repos
+echo "Installing rpmfusion..."
+sudo dnf install -y \
+    https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
+    https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
-     echo "Installing rpmfusion..."
-     
-     sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-     
-     echo "Installing codecs and drivers...."
+# Install codecs and drivers
+echo "Installing codecs and drivers...."
+sudo dnf config-manager --set-enabled fedora-cisco-openh264
+sudo dnf install -y mesa-va-drivers mesa-vdpau-drivers
+sudo dnf group install -y multimedia --allowerasing
+sudo dnf group install -y "sound-and-video" --allowerasing
+sudo dnf install -y mesa-va-drivers-freeworld libva-utils
+sudo dnf install -y gstreamer1-plugins-{bad-*,good-*,base} gstreamer1-plugin-openh264 gstreamer1-libav --exclude=gstreamer1-plugins-bad-free-devel
+sudo dnf install -y libavcodec-freeworld
+sudo dnf swap -y mesa-va-drivers mesa-va-drivers-freeworld
+sudo dnf swap -y mesa-vdpau-drivers mesa-vdpau-drivers-freeworld
 
-sudo dnf config-manager setopt fedora-cisco-openh264.enabled=1
-sudo dnf install mesa-va-drivers mesa-vdpau-drivers
-sudo dnf5 group install multimedia --allowerasing
-sudo dnf5 group install sound-and-video --allowerasing
-sudo dnf5 install mesa-va-drivers-freeworld
-sudo dnf5 install libva-utils
-sudo dnf install gstreamer1-plugins-{bad-*,good-*,base} gstreamer1-plugin-openh264 gstreamer1-libav --exclude=gstreamer1-plugins-bad-free-devel
-sudo dnf install libavcodec-freeworld
-sudo dnf swap mesa-va-drivers mesa-va-drivers-freeworld
-sudo dnf swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld
-
+# Install fonts
 echo "Installing fonts...."
+sudo dnf install -y \
+    google-noto-fonts-all.noarch \
+    google-noto-fonts-all-static.noarch \
+    google-noto-fonts-all-vf.noarch \
+    google-noto-fonts-common.noarch \
+    google-noto-sans-fonts \
+    google-noto-emoji-fonts \
+    google-noto-cjk-fonts \
+    lohit-bengali-fonts
 
-sudo dnf install google-noto-fonts-all.noarch google-noto-fonts-all-static.noarch google-noto-fonts-all-vf.noarch google-noto-fonts-common.noarch
-sudo dnf install google-noto-sans-fonts
-sudo dnf install google-noto-emoji-fonts
-sudo dnf install google-noto-cjk-fonts
-sudo dnf install lohit-bengali-fonts
+echo "Fonts installed successfully!"
 
-echo "Fonts installed succesfully!"
+# Install NWG-Look
+sudo dnf copr enable sdegler/hyprland -y
+sudo dnf install -y nwg-look
 
-sudo dnf copr enable sdegler/hyprland 
-sudo dnf install nwg-look
-
-
+# --- Window Manager Install Functions ---
 install_mango() {
     echo "Installing MangoWM dependencies..."
-
-    sudo dnf install -y \
-            xdg-desktop-portal-wlr xdg-desktop-portal
-            
-            sudo cp -r mango ~/.config/
-            
-            echo "Mango setup done" }
+    sudo dnf install -y xdg-desktop-portal-wlr xdg-desktop-portal
+    sudo cp -r mango ~/.config/
+    echo "Mango setup done!"
+}
 
 install_niri() {
     echo "Installing NiriWM dependencies..."
-
-    sudo dnf install -y \
-        sudo cp -r niri ~/.config/
-          sudo dnf copr enable yalter/niri-git   
-          sudo dnf install niri
-          sudo dnf remove fuzzel swaylock waybar 
-          
-          echo "Niri setup done!"
+    sudo dnf copr enable yalter/niri-git -y
+    sudo dnf install -y niri
+    sudo cp -r niri ~/.config/
+    sudo dnf remove -y fuzzel swaylock waybar
+    echo "Niri setup done!"
 }
 
-# Ask user for choice
+# Ask user for WM choice
 echo "Which WM do you want to install?"
 echo "1) MangoWM"
 echo "2) NiriWM"
@@ -139,25 +137,20 @@ case $choice in
         ;;
 esac
 
+# Make terminal beautiful
 echo "Making your terminal beautiful..."
-
 curl -sS https://starship.rs/install.sh | sh
-
-sudo dnf install fastfetch ImageMagick
-
-sudo cp -r bin  ~/.local/
+sudo dnf install -y fastfetch ImageMagick
+sudo cp -r bin ~/.local/
 sudo cp -r .zshrc ~/
 sudo cp -r fastfetch ~/.config/
 sudo cp -r kitty ~/.config/
 
+echo "Your setup is done. Enjoy!"
 
-echo "Your setup is done.Enjoy!"
-
+# Install SDDM and enable graphical target
 echo "Installing sddm...."
-
+sudo dnf install -y sddm
 sudo systemctl set-default graphical.target
-sudo dnf install sddm
 sudo systemctl enable sddm.service
 sudo systemctl start sddm.service
-
-
