@@ -124,7 +124,7 @@ echo "Making your termina beautiful..."
 
 curl -sS https://starship.rs/install.sh | sh
 
-sudo dnf install fastfetch
+sudo dnf install fastfetch ImageMagick
 
 sudo cp -r bin  ~/.local/
 sudo cp -r .zshrc ~/
