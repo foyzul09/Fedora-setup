@@ -106,7 +106,7 @@ install_mango() {
             
             sudo cp -r mango ~/.config/
             
-            echo "Mango setup done"
+            echo "Mango setup done" }
 
 install_niri() {
     echo "Installing NiriWM dependencies..."
