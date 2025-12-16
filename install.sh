@@ -120,7 +120,26 @@ install_niri() {
           echo "Niri setup done!"
 }
 
-echo "Making your termina beautiful..."
+# Ask user for choice
+echo "Which WM do you want to install?"
+echo "1) MangoWM"
+echo "2) NiriWM"
+read -p "Enter 1 or 2: " choice
+
+case $choice in
+    1)
+        install_mango
+        ;;
+    2)
+        install_niri
+        ;;
+    *)
+        echo "Invalid choice. Exiting."
+        exit 1
+        ;;
+esac
+
+echo "Making your terminal beautiful..."
 
 curl -sS https://starship.rs/install.sh | sh
 
