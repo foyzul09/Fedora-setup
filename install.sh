@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "Starting Setup for Fedora in mangowc...."
+echo "Starting Setup for Fedora...."
 echo " "
 
 # Clean garbage
@@ -104,8 +104,9 @@ sudo dnf install -y nwg-look
 # --- Window Manager Install Functions ---
 install_mango() {
     echo "Installing MangoWM dependencies..."
+    sudo dnf insall mangowc
     sudo dnf install -y xdg-desktop-portal-wlr xdg-desktop-portal
-    sudo cp -r mango ~/.config/
+     cp -r mango ~/.config/
     echo "Mango setup done!"
 }
 
@@ -113,7 +114,7 @@ install_niri() {
     echo "Installing NiriWM dependencies..."
     sudo dnf copr enable yalter/niri-git -y
     sudo dnf install -y niri
-    sudo cp -r niri ~/.config/
+    cp -r niri ~/.config/
     sudo dnf remove -y fuzzel swaylock waybar
     echo "Niri setup done!"
 }
@@ -141,10 +142,10 @@ esac
 echo "Making your terminal beautiful..."
 curl -sS https://starship.rs/install.sh | sh
 sudo dnf install -y fastfetch ImageMagick
-sudo cp -r bin ~/.local/
-sudo cp -r .zshrc ~/
-sudo cp -r fastfetch ~/.config/
-sudo cp -r kitty ~/.config/
+ cp -r bin ~/.local/
+ cp -r .zshrc ~/
+ cp -r fastfetch ~/.config/
+ cp -r kitty ~/.config/
 
 echo "Your setup is done. Enjoy!"
 
