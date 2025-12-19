@@ -54,10 +54,6 @@ sudo dnf install -y \
 # Update xdg-user-dirs
 xdg-user-dirs-update
 
-# Install Noctalia Shell
-echo "Installing noctalia-shell...."
-sudo dnf copr enable zhangyi6324/noctalia-shell -y
-sudo dnf install -y noctalia-shell
 
 echo "Your quickshell is ready!"
 
@@ -147,6 +143,12 @@ sudo dnf install -y fastfetch ImageMagick
  cp -r fastfetch ~/.config/
  cp -r kitty ~/.config/
  cp -r starship ~/.config
+
+ # Install Noctalia Shell
+echo "Installing noctalia-shell...."
+sudo dnf copr enable zhangyi6324/noctalia-shell -y
+sudo dnf install -y noctalia-shell
+
 
 echo "Your setup is done. Enjoy!"
 
