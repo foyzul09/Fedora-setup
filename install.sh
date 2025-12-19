@@ -146,6 +146,7 @@ sudo dnf install -y fastfetch ImageMagick
  cp -r .zshrc ~/
  cp -r fastfetch ~/.config/
  cp -r kitty ~/.config/
+ cp -r starship ~/.config
 
 echo "Your setup is done. Enjoy!"
 
