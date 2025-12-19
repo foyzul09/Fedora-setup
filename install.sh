@@ -137,7 +137,7 @@ esac
 # Make terminal beautiful
 echo "Making your terminal beautiful..."
 curl -sS https://starship.rs/install.sh | sh
-sudo dnf install -y fastfetch ImageMagick
+sudo dnf install -y fastfetch ImageMagick zsh
  cp -r bin ~/.local/
  cp -r .zshrc ~/
  cp -r fastfetch ~/.config/
