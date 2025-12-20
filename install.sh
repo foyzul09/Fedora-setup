@@ -139,12 +139,16 @@ esac
 echo "Making your terminal beautiful..."
 curl -sS https://starship.rs/install.sh | sh
 sudo dnf install -y fastfetch ImageMagick zsh
- cp -r bin ~/.local/
+mkdir ~/.local/bin
+ cp -r bin/fastfetch.sh ~/.local/bin
  cp -r .zshrc ~/
  cp -r fastfetch ~/.config/
  cp -r kitty ~/.config/
  cp -r starship ~/.config
 
+ cd ~/.local/bin
+ chmod +x fastfetch.sh
+ ./fastfetch.sh
  # Install Noctalia Shell
 echo "Installing noctalia-shell...."
 sudo dnf copr enable zhangyi6324/noctalia-shell -y
