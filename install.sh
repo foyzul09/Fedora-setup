@@ -49,6 +49,7 @@ sudo dnf install -y \
     nemo-fileroller \
     gnome-text-editor \
     firefox \
+    quickshell \
     xdg-user-dirs
 
 # Update xdg-user-dirs
@@ -148,6 +149,10 @@ sudo dnf install -y fastfetch ImageMagick zsh
 echo "Installing noctalia-shell...."
 sudo dnf copr enable zhangyi6324/noctalia-shell -y
 sudo dnf install -y noctalia-shell
+
+noctalia-shell
+
+qs -c noctalia-shell
 
 
 echo "Your setup is done. Enjoy!"
